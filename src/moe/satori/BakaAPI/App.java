@@ -40,8 +40,9 @@ public class App extends NanoHTTPD {
 		Map<String, String> parms = session.getParms();
 		try {
 			HashMap<String, Object> result = Utils.invokeController(parms.get("action"), parms.get("method"), parms);
-			String msg = Utils.toJSON(result);
-			return newFixedLengthResponse(msg);
+			String response = Utils.toJSON(result);
+			return newFixedLengthResponse(Response.Status.OK, "application/json", response);
+			
 		} catch (MalformedURLException | ClassNotFoundException | InstantiationException | IllegalAccessException
 				| NoSuchMethodException | SecurityException | IllegalArgumentException | InvocationTargetException e) {
 			e.printStackTrace();
