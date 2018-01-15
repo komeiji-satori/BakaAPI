@@ -12,14 +12,15 @@ import org.bukkit.plugin.Plugin;
 import fi.iki.elonen.NanoHTTPD;
 import moe.satori.BakaAPI.Utils;
 
-public class App extends NanoHTTPD{
+public class App extends NanoHTTPD {
 	Plugin plugin;
-	
-	public App(Plugin plugin,int Port){
+
+	public App(Plugin plugin, int Port) {
 		super(Port);
-		System.out.println("BakaAPI Port: "+ Port);
+		System.out.println("BakaAPI Port: " + Port);
 		this.plugin = plugin;
-    }
+	}
+
 	public void startService() {
 		Runnable rbq = new Runnable() {
 			public void run() {
@@ -33,18 +34,19 @@ public class App extends NanoHTTPD{
 		};
 		Bukkit.getScheduler().runTaskAsynchronously(plugin, rbq);
 	}
+
 	@Override
-    public Response serve(IHTTPSession session) {
+	public Response serve(IHTTPSession session) {
 		Map<String, String> parms = session.getParms();
 		try {
-			HashMap<String,Object> result = Utils.invokeController(parms.get("type"),parms);
+			HashMap<String, Object> result = Utils.invokeController(parms.get("action"), parms.get("method"), parms);
 			String msg = Utils.toJSON(result);
-	        return newFixedLengthResponse(msg);
+			return newFixedLengthResponse(msg);
 		} catch (MalformedURLException | ClassNotFoundException | InstantiationException | IllegalAccessException
 				| NoSuchMethodException | SecurityException | IllegalArgumentException | InvocationTargetException e) {
 			e.printStackTrace();
 		}
 		return null;
-    }
+	}
 
 }
