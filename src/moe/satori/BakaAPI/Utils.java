@@ -5,17 +5,14 @@ import java.net.MalformedURLException;
 import java.util.HashMap;
 import java.util.Map;
 import moe.satori.BakaAPI.Controller.*;
-import org.json.JSONObject;
+import com.google.gson.*;
 import java.lang.reflect.Method;
 
 public class Utils {
 
 	public static String toJSON(HashMap<String, Object> map) {
-		JSONObject json = new JSONObject();
-		for (String key : map.keySet()) {
-			json.put(key, map.get(key));
-		}
-		return json.toString();
+		 Gson json = new Gson();
+		 return json.toJson(map);
 	}
 
 	public static boolean isClass(String className) {

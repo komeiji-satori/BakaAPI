@@ -11,7 +11,14 @@ public class Players {
 	public static HashMap getOnline(HashMap<String, String> params) {
 		HashMap<String, Object> map = new HashMap<>();
 		map.put("status", 200);
-		map.put("online", Bukkit.getOnlinePlayers());
+		map.put("online", _getOnline());
 		return map;
+	}
+	private static ArrayList<String> _getOnline(){
+		ArrayList<String> playerlist = new ArrayList<>();
+		Bukkit.getOnlinePlayers().forEach((player)->{
+			playerlist.add(player.getName());
+		});
+		return playerlist;
 	}
 }
