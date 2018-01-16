@@ -4,7 +4,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
 import java.util.HashMap;
 import java.util.Map;
-import moe.satori.BakaAPI.Controller.*;
 import com.google.gson.*;
 import java.lang.reflect.Method;
 
@@ -40,7 +39,7 @@ public class Utils {
 		Class<?> clz = Class.forName(classpath);
 		Object obj = clz.newInstance();
 		Method m = clz.getMethod(method, HashMap.class);
-		HashMap result = (HashMap) m.invoke(obj, (HashMap) params);
+		HashMap<String, Object> result = (HashMap<String, Object>) m.invoke(obj, (HashMap<String, String>) params);
 		return result;
 	}
 }

@@ -2,15 +2,13 @@ package moe.satori.BakaAPI.Controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 public class Players {
-	public static HashMap getOnline(HashMap<String, String> params) {
+	public static HashMap<String, Object> getOnline(HashMap<String, String> params) {
 		ArrayList<String> playerlist = new ArrayList<>();
 		HashMap<String, Object> map = new HashMap<>();
 		Bukkit.getOnlinePlayers().forEach((player) -> {
@@ -21,13 +19,13 @@ public class Players {
 		return map;
 	}
 
-	public static HashMap getPlayerInventory(HashMap<String, String> params) {
+	public static HashMap<String, Object> getPlayerInventory(HashMap<String, String> params) {
 		HashMap<String, Object> result = new HashMap<>();
 		ArrayList<Object> itemlist = new ArrayList<>();
 		Player player = Bukkit.getPlayer(params.get("username"));
 		for (ItemStack item : player.getInventory().getContents()) {
 			if (item != null && item.getType() != Material.AIR) {
-				HashMap<Object, Object> temp_item = new HashMap();
+				HashMap<Object, Object> temp_item = new HashMap<Object, Object>();
 				int amount = item.getAmount();
 				String name = item.getI18NDisplayName();
 				temp_item.put("name", name);

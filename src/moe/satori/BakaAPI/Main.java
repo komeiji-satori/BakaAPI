@@ -1,8 +1,5 @@
 package moe.satori.BakaAPI;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
 import org.bukkit.plugin.java.JavaPlugin;
 
 import moe.satori.BakaAPI.App;
