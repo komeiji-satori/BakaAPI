@@ -23,4 +23,5 @@ A Minecraft Server API Framework
     │           ├── Main.java  #Plugins Main Class
     │           └── Utils.java #Util Class
     └── plugin.yml  #Plugin Base Config
-    ```
+    
+```
