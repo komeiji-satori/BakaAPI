@@ -6,8 +6,8 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="/Users/satori/eclipse-workspace/BakaAPI/lib/gson-2.6.2.jar"/>
-	<classpathentry kind="lib" path="/Users/satori/eclipse-workspace/BakaAPI/lib/nanohttpd-2.2.0.jar"/>
-	<classpathentry kind="lib" path="/Users/satori/eclipse-workspace/BakaAPI/lib/PaperSpigot-latest.jar"/>
+	<classpathentry kind="lib" path="lib/gson-2.6.2.jar"/>
+	<classpathentry kind="lib" path="lib/nanohttpd-2.2.0.jar"/>
+	<classpathentry kind="lib" path="lib/PaperSpigot-latest.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
