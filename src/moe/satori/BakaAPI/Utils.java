@@ -33,7 +33,7 @@ public class Utils {
 		HashMap<String, Object> map = new HashMap<>();
 		String classpath = "moe.satori.BakaAPI.Controller." + action;
 		if (!isClass(classpath)) {
-			map.put("status", 200);
+			map.put("status", 404);
 			return map;
 		}
 		Class<?> clz = Class.forName(classpath);
