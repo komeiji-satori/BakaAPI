@@ -1,1 +1,3 @@
 port: 8000
+auth: true
+password: "baka2333"

@@ -14,11 +14,16 @@ import moe.satori.BakaAPI.Utils;
 
 public class App extends NanoHTTPD {
 	Plugin plugin;
+	String password;
+	Boolean auth;
 
-	public App(Plugin plugin, int Port) {
+	public App(Plugin plugin, int Port, String password, Boolean auth) {
 		super(Port);
 		System.out.println("BakaAPI Port: " + Port);
+		System.out.println("Use Authorize: "+ auth.toString());
 		this.plugin = plugin;
+		this.password = password;
+		this.auth = auth;
 	}
 
 	public void startService() {
@@ -38,11 +43,26 @@ public class App extends NanoHTTPD {
 	@Override
 	public Response serve(IHTTPSession session) {
 		Map<String, String> parms = session.getParms();
+		Map<String, String> headers = session.getHeaders();
+		String response = "";
+		HashMap<String, Object> map = new HashMap<>();
 		try {
-			HashMap<String, Object> result = Utils.invokeController(parms.get("action"), parms.get("method"), parms);
-			String response = Utils.toJSON(result);
+			if (parms.get("token") == null || this.auth == true) {
+				map.put("status", 404);
+				response = Utils.toJSON(map);
+			} else {
+				if (Utils.checkToken((HashMap<String, String>) parms, this.password,
+						(HashMap<String, String>) headers)) {
+					HashMap<String, Object> result = Utils.invokeController(parms.get("action"), parms.get("method"),
+							parms);
+					response = Utils.toJSON(result);
+				} else {
+					map.put("status", 401);
+					response = Utils.toJSON(map);
+				}
+			}
 			return newFixedLengthResponse(Response.Status.OK, "application/json", response);
-			
+
 		} catch (MalformedURLException | ClassNotFoundException | InstantiationException | IllegalAccessException
 				| NoSuchMethodException | SecurityException | IllegalArgumentException | InvocationTargetException e) {
 			e.printStackTrace();
