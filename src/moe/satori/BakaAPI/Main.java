@@ -16,13 +16,7 @@ public class Main extends JavaPlugin {
 	}
 
 	public static void main(String[] args) {
-		// HashMap<String, Object> map = new HashMap<>();
-		// ArrayList<String> playerlist = new ArrayList<>();
-		// playerlist.add("23333");
-		// map.put("owo", "owo");
-		// map.put("ovo", playerlist);
-		// System.out.println(Utils.toJSON(map));
-		// Test.getResult(params);
+
 	}
 
 	@Override

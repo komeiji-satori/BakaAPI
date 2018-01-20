@@ -18,15 +18,35 @@ public class Players {
 		map.put("online", playerlist);
 		return map;
 	}
-	
+
+	public static HashMap<String, Object> addWhitelist(HashMap<String, String> params) {
+		HashMap<String, Object> result = new HashMap<String, Object>();
+		String playerName = params.get("username");
+		Player player = Bukkit.getPlayer(playerName);
+		player.setWhitelisted(true);
+		result.put("status", 200);
+		result.put("message", "ok");
+		return result;
+	}
+
+	public static HashMap<String, Object> removeWhitelist(HashMap<String, String> params) {
+		HashMap<String, Object> result = new HashMap<String, Object>();
+		String playerName = params.get("username");
+		Player player = Bukkit.getPlayer(playerName);
+		player.setWhitelisted(false);
+		result.put("status", 200);
+		result.put("message", "ok");
+		return result;
+	}
+
 	public static HashMap<String, Object> sendMessage(HashMap<String, String> params) {
-		HashMap<String, Object> result = new HashMap<String,Object>();
+		HashMap<String, Object> result = new HashMap<String, Object>();
 		String playerName = params.get("username");
 		String content = params.get("content");
 		Player player = Bukkit.getPlayer(playerName);
 		player.sendMessage(content);
 		result.put("status", 200);
-		result.put("message","ok");
+		result.put("message", "ok");
 		return result;
 	}
 

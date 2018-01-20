@@ -5,6 +5,7 @@ import java.net.MalformedURLException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -60,6 +61,7 @@ public class Utils {
 		}
 		final int size = list.size();
 		final String[] arrayToSort = list.toArray(new String[size]);
+		Arrays.sort(arrayToSort, String.CASE_INSENSITIVE_ORDER);
 		final StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < size; i++) {
 			sb.append(arrayToSort[i]);
@@ -70,7 +72,7 @@ public class Utils {
 	}
 
 	public static boolean checkToken(HashMap<String, String> params, String password, HashMap<String, String> headers) {
-		String token = headers.get("AuthorizeToken");
+		String token = headers.get("x-authorizetoken");
 		String query = HttpBuildQuery(params);
 		String sign = stringMD5(query + "@" + password);
 		return token.equals(sign);

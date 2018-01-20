@@ -20,7 +20,7 @@ public class App extends NanoHTTPD {
 	public App(Plugin plugin, int Port, String password, Boolean auth) {
 		super(Port);
 		System.out.println("BakaAPI Port: " + Port);
-		System.out.println("Use Authorize: "+ auth.toString());
+		System.out.println("Use Authorize: " + auth.toString());
 		this.plugin = plugin;
 		this.password = password;
 		this.auth = auth;
@@ -44,11 +44,20 @@ public class App extends NanoHTTPD {
 	public Response serve(IHTTPSession session) {
 		Map<String, String> parms = session.getParms();
 		Map<String, String> headers = session.getHeaders();
+		Method method = session.getMethod();
+		if (Method.POST.equals(method)) {
+			try {
+				session.parseBody(parms);
+			} catch (IOException | ResponseException e) {
+				e.printStackTrace();
+			}
+		}
 		String response = "";
 		HashMap<String, Object> map = new HashMap<>();
 		try {
-			if (parms.get("token") == null || this.auth == true) {
-				map.put("status", 404);
+			if (!headers.containsKey("x-authorizetoken") && this.auth == true) {
+				map.put("status", 401);
+				map.put("msg", "Empty Token");
 				response = Utils.toJSON(map);
 			} else {
 				if (Utils.checkToken((HashMap<String, String>) parms, this.password,
@@ -58,6 +67,7 @@ public class App extends NanoHTTPD {
 					response = Utils.toJSON(result);
 				} else {
 					map.put("status", 401);
+					map.put("msg", "Token Verify Fail");
 					response = Utils.toJSON(map);
 				}
 			}
