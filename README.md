@@ -5,6 +5,13 @@ A Minecraft Server API Framework
 
 ![examples.png](https://i.loli.net/2018/01/15/5a5cc68f30858.png)
 
+## Config Samples
+```
+port: 8000 #Http API Port
+auth: true #Use Authorize
+password: "baka2333" #Authorize Password
+```
+
 ## Source Tree
 ```
 .
