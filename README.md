@@ -25,3 +25,27 @@ A Minecraft Server API Framework
     └── plugin.yml  #Plugin Base Config
     
 ```
+
+## Authorize Demo
+### Please First `composer require rmccue/requests`
+```
+<?php
+include 'vendor/autoload.php';
+$api = "http://127.0.0.1:8000/";
+$password = "baka2333";
+$arr = [
+	"action" => "Players",
+	"method" => "getOnline",
+];
+function getSign($arr, $secret) {
+	ksort($arr);
+	return strtoupper(md5(http_build_query($arr) . "@" . $secret));
+}
+$sign = getSign($arr, $password);
+$headers = [
+	"X-AuthorizeToken" => $sign,
+];
+
+$result = Requests::post($api, $headers, $arr);
+print_r($result->body);
+```
