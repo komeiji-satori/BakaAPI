@@ -48,13 +48,21 @@ $arr = [
 ];
 function getSign($arr, $secret) {
 	ksort($arr);
-	return strtoupper(md5(http_build_query($arr) . "@" . $secret));
+	return strtoupper(md5(BuildQueryWithoutURLEncode($arr) . "@" . $secret));
+}
+function BuildQueryWithoutURLEncode($array) {
+	$paramsJoined = array();
+	foreach ($array as $param => $value) {
+		$paramsJoined[] = "$param=$value";
+	}
+	$query = implode('&', $paramsJoined);
+	return $query;
 }
 $sign = getSign($arr, $password);
 $headers = [
 	"X-AuthorizeToken" => $sign,
 ];
 
-$result = Requests::get($api . "?" . http_build_query($arr), $headers);
+$result = Requests::get($api . "?" . BuildQueryWithoutURLEncode($arr), $headers);
 print_r($result->body);
 ```
