@@ -29,6 +29,23 @@ public class Players {
 		return result;
 	}
 
+	public static HashMap<String, Object> kickPlayer(HashMap<String, String> params) {
+		HashMap<String, Object> result = new HashMap<String, Object>();
+		final String playerName = params.get("username");
+		final String content = params.get("content");
+		final Player player = Bukkit.getPlayer(playerName);
+		Bukkit.getScheduler().runTask(Bukkit.getPluginManager().getPlugin("BakaAPI"), new Runnable() {
+			public void run() {
+				if (player.isOnline()) {
+					player.kickPlayer(content);
+				}
+			}
+		});
+		result.put("status", 200);
+		result.put("message", "ok");
+		return result;
+	}
+
 	public static HashMap<String, Object> removeWhitelist(HashMap<String, String> params) {
 		HashMap<String, Object> result = new HashMap<String, Object>();
 		String playerName = params.get("username");
@@ -44,9 +61,15 @@ public class Players {
 		String playerName = params.get("username");
 		String content = params.get("content");
 		Player player = Bukkit.getPlayer(playerName);
-		player.sendMessage(content);
-		result.put("status", 200);
-		result.put("message", "ok");
+		if (player.isOnline()) {
+			player.sendMessage(content);
+			result.put("status", 200);
+			result.put("message", "ok");
+		} else {
+			result.put("status", 404);
+			result.put("message", "user not online");
+		}
+
 		return result;
 	}
 
@@ -55,14 +78,24 @@ public class Players {
 		HashMap<String, Object> location = new HashMap<>();
 		String playerName = params.get("username");
 		Player player = Bukkit.getPlayer(playerName);
-		location.put("x", player.getLocation().getX());
-		location.put("y", player.getLocation().getY());
-		location.put("z", player.getLocation().getZ());
-		result.put("health", player.getHealth());
-		result.put("location", location);
+		if (player.isOnline()) {
+			location.put("x", player.getLocation().getX());
+			location.put("y", player.getLocation().getY());
+			location.put("z", player.getLocation().getZ());
+			result.put("health", player.getHealth());
+			result.put("level", player.getLevel());
+			result.put("online", player.isOnline());
+			result.put("location", location);
+			result.put("status", 200);
+		} else {
+			result.put("status", 404);
+			result.put("message", "user not online");
+		}
+
 		return result;
 	}
 
+	@SuppressWarnings("deprecation")
 	public static HashMap<String, Object> getPlayerInventory(HashMap<String, String> params) {
 		HashMap<String, Object> result = new HashMap<>();
 		ArrayList<Object> itemlist = new ArrayList<>();

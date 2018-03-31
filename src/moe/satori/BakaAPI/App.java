@@ -16,14 +16,14 @@ public class App extends NanoHTTPD {
 	Plugin plugin;
 	String password;
 	Boolean auth;
-
-	public App(Plugin plugin, int Port, String password, Boolean auth) {
-		super(Port);
-		System.out.println("BakaAPI Port: " + Port);
-		System.out.println("Use Authorize: " + auth.toString());
+	
+	public App(Plugin plugin, HashMap<String, Object> ServerConfig) {
+		super((int) ServerConfig.get("port"));
+		System.out.println("BakaAPI Port: " + ServerConfig.get("port"));
+		System.out.println("Use Authorize: " + ServerConfig.get("auth"));
 		this.plugin = plugin;
-		this.password = password;
-		this.auth = auth;
+		this.password = (String) ServerConfig.get("password");
+		this.auth = (Boolean) ServerConfig.get("auth");
 	}
 
 	public void startService() {

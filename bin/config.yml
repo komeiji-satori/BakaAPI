@@ -1,3 +1,5 @@
 port: 8000
 auth: true
+node_engine: true
+extends_folder: "/Users/satori/NekoCraft/plugins/BakaAPI/Extends/"
 password: "baka2333"
