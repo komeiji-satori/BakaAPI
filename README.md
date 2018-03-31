@@ -42,7 +42,9 @@ $api = "http://127.0.0.1:8000/";
 $password = "baka2333";
 $arr = [
 	"action" => "Players",
-	"method" => "getOnline",
+	"method" => "kickPlayer",
+	"username" => "KagurazakaSatori",
+	"content" => "Meow: " . time(),
 ];
 function getSign($arr, $secret) {
 	ksort($arr);
@@ -53,6 +55,6 @@ $headers = [
 	"X-AuthorizeToken" => $sign,
 ];
 
-$result = Requests::post($api, $headers, $arr);
+$result = Requests::get($api . "?" . http_build_query($arr), $headers);
 print_r($result->body);
 ```
